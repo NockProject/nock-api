@@ -20,7 +20,7 @@ npm install
 ```
 
 ```
-node server.js 
+nodemon server
 ```
 
 
