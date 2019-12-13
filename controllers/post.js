@@ -33,3 +33,9 @@ exports.getAllPosts =  (req, res, next) => {
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
 };
+
+exports.getAllPostsByType =  (req, res, next) => {
+    Post.find({type: req.params.type})
+        .then(posts => res.status(200).json(posts))
+        .catch(error => res.status(400).json({ error }));
+};
