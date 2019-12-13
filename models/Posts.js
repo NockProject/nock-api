@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
-const User = require('User.js');
-const Schema = mongoose.Schema;
 
 const postSchema = mongoose.Schema({
+    title:{
+        type: String,
+        required: true
+    },
     type:{
         type: String,
         required: true,
         default: "post" // Peut aussi être "survey" ou "event"
     },
-    user_id:{
-        type: Schema.User.ObjectId,
-        required: true
-    },
-    creation_date:{
+    creationDate:{
         type: Date,
         required: true,
         default: Date.now
@@ -22,32 +20,26 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    img_url:{
+    imgUrl:{
         type: String,
         required: false
     },
     // Type : Event
-    planned_date:{
+    plannedDate:{
         type: Date,
-        required: true
-    },
-    user_list:{
-        type: [userSchema],
         required: false
     },
     // Type : Survey
     question:{
         type: String,
-        required: true
+        required: false
     },
-    response:{
-        type: [responseSchema],
-        required: true
-    },
-    end_date:{
+    endDate:{
         type: Date,
-        required: true
+        required: false
     },
 });
 
-mongoose.model('post', postSchema);
+module.exports = mongoose.model('Post', postSchema);
+
+
