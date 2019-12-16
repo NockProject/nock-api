@@ -60,11 +60,13 @@ exports.getAllUsers =  (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-// TO-DO : Ajouter la fonction d'encryptage pour l'enregistrement du mots de passe
-// TO-DO : Ajouter la fonction de check de double email
 exports.updateUser = (req,res,next) => {
-    User.updateOne({_id: req.params.id },
-        { ...req.body, _id: req.params.id})
-        .then(() => res.status(200).json({message: 'Objet modifie !'}))
-        .catch(error => res.status(400).json({ error }));
+    bcrypt.hash(req.body.password, 10)
+        .then( hash => {
+            User.updateOne({_id: req.params.id },
+                { ...req.body, _id: req.params.id, password: hash})
+                .then(() => res.status(200).json({message: 'Objet modifie !'}))
+                .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
 };
