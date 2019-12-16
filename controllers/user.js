@@ -41,3 +41,30 @@ exports.login = (req, res, next) =>{
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+exports.deleteUser = (req, res, next) => {
+    User.deleteOne({_id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet supprime !'}))
+        .catch(error => res.status(400).json({ error }));
+};
+
+exports.getOneUser = (req, res, next)=>{
+    User.findOne({_id: req.params.id})
+        .then(thing => res.status(200).json(thing))
+        .catch(error => res.status(404).json({error}));
+};
+
+exports.getAllUsers =  (req, res, next) => {
+    User.find()
+        .then(things => res.status(200).json(things))
+        .catch(error => res.status(400).json({ error }));
+};
+
+// TO-DO : Ajouter la fonction d'encryptage pour l'enregistrement du mots de passe
+// TO-DO : Ajouter la fonction de check de double email
+exports.updateUser = (req,res,next) => {
+    User.updateOne({_id: req.params.id },
+        { ...req.body, _id: req.params.id})
+        .then(() => res.status(200).json({message: 'Objet modifie !'}))
+        .catch(error => res.status(400).json({ error }));
+};
