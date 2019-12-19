@@ -7,7 +7,11 @@ const userSchema =mongoose.Schema({
     firstName: {type: String, require:true},
     email: {type: String, require: true, unique: true },
     password: { type: String, require: true},
-    isAdmin:{type: Boolean, require: true}
+    isAdmin:{type: Boolean, require: true},
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 });
 
 userSchema.plugin(uniqueValidator);
