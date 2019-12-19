@@ -16,8 +16,8 @@ const buildingSchema = mongoose.Schema({
             required: true
         }
     },
-    geoloc:{
-        type: Object,
+    imgUrl:{
+        type: String,
         required: false
     }
 });

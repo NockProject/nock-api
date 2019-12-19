@@ -17,6 +17,7 @@ const postSchema = mongoose.Schema({
     type:{
         type: String,
         required: true,
+        enum: ['post', 'fiche', 'sondage', 'event'],
         default: "post"
     },
     creationDate:{
