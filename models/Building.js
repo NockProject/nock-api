@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('../models/User');
-const Schema = mongoose.Schema;
 
 const buildingSchema = mongoose.Schema({
     address:{
@@ -21,8 +19,7 @@ const buildingSchema = mongoose.Schema({
     geoloc:{
         type: Object,
         required: false
-    },
-    Users: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    }
 });
 
 module.exports = mongoose.model('Building', buildingSchema);

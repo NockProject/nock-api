@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
     title:{
         type: String,
         required: true
@@ -13,7 +17,7 @@ const postSchema = mongoose.Schema({
     type:{
         type: String,
         required: true,
-        enum: ['post', 'fiche', 'survey', 'event'],
+        enum: ['post', 'fiche', 'sondage', 'event'],
         default: "post"
     },
     creationDate:{
@@ -31,16 +35,12 @@ const postSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    // Type : Event + survey
+    // Type : Event + Sondage
     endDate:{
         type: Date,
         required: false
-    },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
     }
-    // TO-DO : survey
+    // TO-DO : reponses
 });
 
 module.exports = mongoose.model('Post', postSchema);
