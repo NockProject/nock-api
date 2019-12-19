@@ -8,10 +8,6 @@ const buildingSchema = mongoose.Schema({
     geoloc:{
         type: Object,
         required: false
-    },
-    description:{
-        type:String,
-        required:true
     }
 });
 
