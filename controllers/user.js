@@ -7,6 +7,7 @@ exports.signUp = (req, res, next) =>{
     bcrypt.hash(req.body.password, 10)
         .then( hash => {
             const user = new User({
+                ...req.body,
                 email: req.body.email,
                 password: hash
             });
@@ -30,8 +31,9 @@ exports.login = (req, res, next) =>{
                     }
                     res.status(200).json({
                         userId: user._id,
+                        isAdmin: user.isAdmin,
                         token: jwt.sign(
-                            { userId: user._id },
+                            { userId: user._id, isAdmin: user.isAdmin },
                             process.env.TOKEN_ENCODE,
                             { expiresIn: '24h' }
                         )
