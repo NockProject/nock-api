@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 
 
 
@@ -25,8 +26,10 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json());
 
-app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/comm', commentRoutes);
+
 
 
 module.exports = app;
