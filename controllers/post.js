@@ -50,3 +50,10 @@ exports.getAllPostsByType =  (req, res, next) => {
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
 };
+
+exports.getPostsWithComment = (req,res,next) => {
+    Post.findOne({_id: req.params.id})
+        .populate('comments').exec()
+        .then((comments) => res.status(200).json({written: comments}))
+        .catch(error => res.status(500).json({ error }));
+};

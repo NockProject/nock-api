@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 exports.createComment = (req, res, next) => {
     const comment = new Comment({
@@ -8,6 +9,10 @@ exports.createComment = (req, res, next) => {
         comment.save()
         .then(() =>
                 User.updateOne({ _id: comment.author._id },
+                    { $push: { comments: comment }})
+                    .then(() => next())
+                    .catch(error => res.status(400).json({ error })),
+                Post.updateOne({ _id: comment.postId._id },
                     { $push: { comments: comment }})
                     .then(() => next())
                     .catch(error => res.status(400).json({ error })),

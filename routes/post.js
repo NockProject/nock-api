@@ -7,6 +7,7 @@ const authAdmin = require('../middleware/authAdmin');
 
 router.get('/', auth, postCtrl.getAllPosts);
 router.get('/type/:type', auth, postCtrl.getAllPostsByType);
+router.get('/populate/:id', auth, postCtrl.getPostsWithComment);
 router.post('/', auth, postCtrl.createPost);
 router.get('/:id', auth,postCtrl.getOnePost);
 router.delete('/:id', auth, postCtrl.deletePost);
