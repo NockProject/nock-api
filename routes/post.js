@@ -11,7 +11,7 @@ router.get('/:id', auth,postCtrl.getOnePost);
 router.delete('/:id', auth, postCtrl.deletePost);
 router.put('/:id', auth, postCtrl.updatePost);
 
-router.get('/type/:type', auth, postCtrl.getAllPostsByType);
+router.get('/filter/type/:type', auth, postCtrl.getAllPostsByType);
 router.get('/comments/:id', auth, postCtrl.getPostsWithComment);
 
 module.exports = router;

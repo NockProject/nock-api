@@ -47,3 +47,10 @@ exports.getAllBuildingWithUsers = (req,res,next) => {
         .then((users) => res.status(200).json({resident: users}))
         .catch(error => res.status(500).json({ error }));
 };
+
+exports.getBuildingByAdress =  (req, res, next) => {
+    console.log(req.body.address);
+    Building.find({address: req.body.address})
+        .then(building => res.status(200).json(building))
+        .catch(error => res.status(400).json({ error }));
+};

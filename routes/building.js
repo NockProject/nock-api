@@ -10,6 +10,7 @@ router.get('/:id', buildingCtrl.getOneBuilding);
 router.delete('/:id', auth, buildingCtrl.deleteBuilding);
 router.put('/:id', auth, buildingCtrl.updateBuilding);
 
+router.get('/filter/adress', buildingCtrl.getBuildingByAdress);
 router.get('/posts/:id', buildingCtrl.getAllBuildingWithPosts);
 router.get('/residents/:id', buildingCtrl.getAllBuildingWithUsers);
 
