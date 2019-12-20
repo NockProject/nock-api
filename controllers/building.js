@@ -33,3 +33,10 @@ exports.getAllBuilding =  (req, res, next) => {
         .then(buildings => res.status(200).json(buildings))
         .catch(error => res.status(400).json({ error }));
 };
+
+exports.getAllBuildingWithPosts = (req,res,next) => {
+    Building.findOne({_id: req.params.id})
+        .populate('posts').exec()
+        .then((posts) => res.status(200).json({feed: posts}))
+        .catch(error => res.status(500).json({ error }));
+};

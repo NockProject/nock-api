@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
 const buildingSchema = mongoose.Schema({
     address:{
         type: String,
@@ -22,7 +20,10 @@ const buildingSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    Users: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 });
 
 module.exports = mongoose.model('Building', buildingSchema);
