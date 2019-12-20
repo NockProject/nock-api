@@ -40,3 +40,10 @@ exports.getAllBuildingWithPosts = (req,res,next) => {
         .then((posts) => res.status(200).json({feed: posts}))
         .catch(error => res.status(500).json({ error }));
 };
+
+exports.getAllBuildingWithUsers = (req,res,next) => {
+    Building.findOne({_id: req.params.id})
+        .populate('residents').exec()
+        .then((users) => res.status(200).json({resident: users}))
+        .catch(error => res.status(500).json({ error }));
+};

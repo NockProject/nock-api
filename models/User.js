@@ -11,7 +11,11 @@ const userSchema =mongoose.Schema({
     posts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
-    }]
+    }],
+    buildingId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Building'
+    }
 });
 
 userSchema.plugin(uniqueValidator);

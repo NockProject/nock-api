@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 
 router.get('/', buildingCtrl.getAllBuilding);
 router.get('/populate/:id', buildingCtrl.getAllBuildingWithPosts);
+router.get('/populate_user/:id', buildingCtrl.getAllBuildingWithUsers);
 router.post('/', buildingCtrl.createBuilding);
 router.get('/:id', buildingCtrl.getOneBuilding);
 router.delete('/:id', auth, buildingCtrl.deleteBuilding);
