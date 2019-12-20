@@ -1,11 +1,14 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
 
 exports.createPost = (req, res, next) => {
     const post = new Post({
         ...req.body
     });
     post.save()
-        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+        .then(() =>
+                User.updateOne({ _id: post.author._id },{ $push: { posts: post }}),
+                res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 };
 

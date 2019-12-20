@@ -74,10 +74,9 @@ exports.updateUser = (req,res,next) => {
 };
 
 exports.getUserWithPosts = (req,res,next) => {
-    User.findOne({ _id: req.params.id })
-        .populate('posts').exec((err, posts) => {
-            res.status(200).json({User: posts});
-    });
-
+    User.findOne({_id: req.params.id})
+        .populate('posts').exec()
+        .then((posts) => res.status(200).json({written: posts}))
+        .catch(error => res.status(500).json({ error }));
 };
 
