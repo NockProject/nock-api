@@ -1,11 +1,17 @@
 const Comment = require('../models/Comment');
+const User = require('../models/User');
 
 exports.createComment = (req, res, next) => {
     const comment = new Comment({
         ...req.body
     });
-    comment.save()
-        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+        comment.save()
+        .then(() =>
+                User.updateOne({ _id: comment.author._id },
+                    { $push: { comments: comment }})
+                    .then(() => next())
+                    .catch(error => res.status(400).json({ error })),
+            res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 };
 

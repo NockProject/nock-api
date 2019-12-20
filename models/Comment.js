@@ -12,6 +12,10 @@ const commentSchema = mongoose.Schema({
     postId:{
         type: String,
         required: false
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

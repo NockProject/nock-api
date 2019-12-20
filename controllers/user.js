@@ -85,3 +85,9 @@ exports.getUserWithPosts = (req,res,next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+exports.getUserWithComments = (req,res,next) => {
+    User.findOne({_id: req.params.id})
+        .populate('comments').exec()
+        .then((comments) => res.status(200).json({written: comments}))
+        .catch(error => res.status(500).json({ error }));
+};
