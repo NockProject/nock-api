@@ -19,7 +19,15 @@ const buildingSchema = mongoose.Schema({
     imgUrl:{
         type: String,
         required: false
-    }
+    },
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }],
+    residents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model('Building', buildingSchema);

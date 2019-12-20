@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt =require('jsonwebtoken');
 
 const User = require('../models/User');
+const Building = require('../models/Building');
 
 exports.signUp = (req, res, next) =>{
     bcrypt.hash(req.body.password, 10)
@@ -11,8 +12,12 @@ exports.signUp = (req, res, next) =>{
                 email: req.body.email,
                 password: hash
             });
-            user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
+            Building.updateOne({ _id: user.buildingId._id },
+                { $push: { residents: user }})
+                .then(() =>
+                    user.save()
+                        .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
+                        .catch(error => res.status(400).json({ error })))
                 .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
@@ -52,13 +57,13 @@ exports.deleteUser = (req, res, next) => {
 
 exports.getOneUser = (req, res, next)=>{
     User.findOne({_id: req.params.id})
-        .then(thing => res.status(200).json(thing))
+        .then(user => res.status(200).json(user))
         .catch(error => res.status(404).json({error}));
 };
 
 exports.getAllUsers =  (req, res, next) => {
     User.find()
-        .then(things => res.status(200).json(things))
+        .then(users => res.status(200).json(users))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -70,5 +75,19 @@ exports.updateUser = (req,res,next) => {
                 .then(() => res.status(200).json({message: 'Objet modifie !'}))
                 .catch(error => res.status(400).json({ error }));
         })
+        .catch(error => res.status(500).json({ error }));
+};
+
+exports.getUserWithPosts = (req,res,next) => {
+    User.findOne({_id: req.params.id})
+        .populate('posts').exec()
+        .then((posts) => res.status(200).json({written: posts}))
+        .catch(error => res.status(500).json({ error }));
+};
+
+exports.getUserWithComments = (req,res,next) => {
+    User.findOne({_id: req.params.id})
+        .populate('comments').exec()
+        .then((comments) => res.status(200).json({written: comments}))
         .catch(error => res.status(500).json({ error }));
 };

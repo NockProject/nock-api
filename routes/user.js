@@ -11,4 +11,7 @@ router.get('/:id',auth, userCtrl.getOneUser);
 router.get('/', auth,userCtrl.getAllUsers);
 router.put('/:id', auth, userCtrl.updateUser);
 
+router.get('/posts/:id', userCtrl.getUserWithPosts);
+router.get('/comments/:id', userCtrl.getUserWithComments);
+
 module.exports = router;

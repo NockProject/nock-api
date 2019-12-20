@@ -1,11 +1,22 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
+const Building = require('../models/Building');
 
 exports.createPost = (req, res, next) => {
     const post = new Post({
         ...req.body
     });
     post.save()
-        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+        .then(() =>
+            User.updateOne({ _id: post.author._id },
+                { $push: { posts: post }})
+                .then(() => next())
+                .catch(error => res.status(400).json({ error })),
+            Building.updateOne({ _id: post.buildingId._id },
+                { $push: { posts: post }})
+                .then(() => next())
+                .catch(error => res.status(400).json({ error })),
+            res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -38,4 +49,11 @@ exports.getAllPostsByType =  (req, res, next) => {
     Post.find({type: req.params.type})
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
+};
+
+exports.getPostsWithComment = (req,res,next) => {
+    Post.findOne({_id: req.params.id})
+        .populate('comments').exec()
+        .then((comments) => res.status(200).json({written: comments}))
+        .catch(error => res.status(500).json({ error }));
 };
