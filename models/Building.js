@@ -1,27 +1,25 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
 const buildingSchema = mongoose.Schema({
     address:{
         type: String,
         required: true
     },
-    feed:{
-        type: Array,
-        required: false
+    location: {
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
     },
-    geoloc:{
-        type: Object,
-        required: false
-    },
-    dashboard:{
-        type: Object,
-        required: false
-    },
-    residents:{
-        type: Array,
+    imgUrl:{
+        type: String,
         required: false
     }
 });
 
-mongoose.model('building', buildingSchema);
+module.exports = mongoose.model('Building', buildingSchema);

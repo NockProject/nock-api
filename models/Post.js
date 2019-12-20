@@ -9,39 +9,38 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    alert:{
+        type: Boolean,
+        required: true,
+        default: false
+    },
     type:{
         type: String,
         required: true,
-        default: "post" // Peut aussi être "survey" ou "event"
+        enum: ['post', 'fiche', 'sondage', 'event'],
+        default: "post"
     },
     creationDate:{
         type: Date,
         required: true,
         default: Date.now
     },
-    // Type : Post
+    // Type : Post + Event + Fiche
     description:{
         type: String,
         required: true
     },
+    // Type : Post + Fiche
     imgUrl:{
         type: String,
         required: false
     },
-    // Type : Event
-    plannedDate:{
-        type: Date,
-        required: false
-    },
-    // Type : Survey
-    question:{
-        type: String,
-        required: false
-    },
+    // Type : Event + Sondage
     endDate:{
         type: Date,
         required: false
-    },
+    }
+    // TO-DO : reponses
 });
 
 module.exports = mongoose.model('Post', postSchema);

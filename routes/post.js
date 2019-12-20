@@ -3,6 +3,7 @@ const router = express.Router();
 
 const postCtrl = require('../controllers/post');
 const auth = require('../middleware/auth');
+const authAdmin = require('../middleware/authAdmin');
 
 router.get('/', auth, postCtrl.getAllPosts);
 router.get('/type/:type', auth, postCtrl.getAllPostsByType);
