@@ -18,8 +18,8 @@ const buildingSchema = mongoose.Schema({
             required: true
         }
     },
-    imgUrl:{
-        type: String,
+    geoloc:{
+        type: Object,
         required: false
     },
     Users: [{ type: Schema.Types.ObjectId, ref: 'User' }]
