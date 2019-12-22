@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
 const buildingSchema = mongoose.Schema({
-    address:{
-        type: String,
-        required: true
-    },
+    address: {type: String, required: true},
     location: {
         type: {
             type: String, // Don't do `{ location: { type: String } }`
@@ -16,18 +13,10 @@ const buildingSchema = mongoose.Schema({
             required: true
         }
     },
-    imgUrl:{
-        type: String,
-        required: false
-    },
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
-    }],
-    residents: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }]
+    imgUrl: {type: String, required: false},
+    // Table linking
+    posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
+    residents: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 module.exports = mongoose.model('Building', buildingSchema);

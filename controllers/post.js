@@ -7,51 +7,54 @@ exports.createPost = (req, res, next) => {
         ...req.body
     });
     post.save()
-        .then(() =>
-            User.updateOne({ _id: post.author._id },
-                { $push: { posts: post }})
-                .then(() => next())
-                .catch(error => res.status(400).json({ error })),
-            Building.updateOne({ _id: post.buildingId._id },
-                { $push: { posts: post }})
-                .then(() => next())
-                .catch(error => res.status(400).json({ error })),
-            res.status(201).json({ message: 'Objet enregistré !'}))
+        .then(() => next())
         .catch(error => res.status(400).json({ error }));
+
+    Building.updateOne({ _id: post.buildingId._id },
+        { $push: { posts: post }})
+        .then(() => next())
+        .catch(error => res.status(400).json({ error }));
+
+    User.updateOne({ _id: post.author._id },
+        { $push: { posts: post }})
+        .then(() => next())
+        .catch(error => res.status(400).json({ error }));
+
+    res.status(201).json({ message: 'Objet enregistré !'})
 };
 
-exports.deletePost =  (req, res, next) => {
+exports.deletePost =  (req, res) => {
     Post.deleteOne({_id: req.params.id })
         .then(() => res.status(200).json({ message: 'Objet supprime !'}))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.updatePost = (req,res,next) => {
+exports.updatePost = (req,res) => {
     Post.updateOne({_id: req.params.id },
         { ...req.body, _id: req.params.id})
         .then(() => res.status(200).json({message: 'Objet modifie !'}))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getOnePost = (req, res, next)=>{
+exports.getOnePost = (req, res)=>{
     Post.findOne({_id: req.params.id})
         .then(post => res.status(200).json(post))
         .catch(error => res.status(404).json({error}));
 };
 
-exports.getAllPosts =  (req, res, next) => {
+exports.getAllPosts =  (req, res) => {
     Post.find()
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getAllPostsByType =  (req, res, next) => {
+exports.getAllPostsByType =  (req, res) => {
     Post.find({type: req.params.type})
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getPostsWithComment = (req,res,next) => {
+exports.getPostsWithComment = (req,res) => {
     Post.findOne({_id: req.params.id})
         .populate('comments').exec()
         .then((comments) => res.status(200).json({written: comments}))
