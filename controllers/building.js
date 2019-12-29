@@ -36,7 +36,14 @@ exports.getAllBuilding =  (req, res) => {
 
 exports.getAllBuildingWithPosts = (req,res) => {
     Building.findOne({_id: req.params.id})
-        .populate('posts').exec()
+        .populate({
+            path: 'posts',
+            populate: {
+                path: 'comments',
+                options: { limit: 1 }
+            }
+        })
+        .exec()
         .then((posts) => res.status(200).json({feed: posts}))
         .catch(error => res.status(500).json({ error }));
 };
