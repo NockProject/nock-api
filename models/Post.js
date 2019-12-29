@@ -17,5 +17,6 @@ const postSchema = mongoose.Schema({
     comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
     // TO-DO : survey
 });
+postSchema.index({ title: 'text', description: 'text' });
 
 module.exports = mongoose.model('Post', postSchema);

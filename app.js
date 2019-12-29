@@ -7,6 +7,7 @@ const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
 const commentRoutes = require('./routes/comment');
 const buildingRoutes = require('./routes/building');
+const cronRoutes = require('./routes/cron');
 
 mongoose.connect(process.env.DB_URI,
     { useNewUrlParser: true,
@@ -28,6 +29,7 @@ app.use('/api/auth', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comm', commentRoutes);
 app.use('/api/building', buildingRoutes);
+app.use('/api/cron', cronRoutes);
 
 
 
