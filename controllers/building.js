@@ -22,6 +22,13 @@ exports.updateBuilding = (req,res) => {
         .catch(error => res.status(400).json({ error }));
 };
 
+exports.addUserToBuilding = (req,res) => {
+    Building.updateOne({_id: req.params.id },
+        { _id: req.params.id, $push: { residents: req.body.userId }},)
+        .then(() => res.status(200).json({message: 'Objet modifie !'}))
+        .catch(error => res.status(400).json({ error }));
+};
+
 exports.getOneBuilding = (req, res)=>{
     Building.findOne({_id: req.params.id})
         .then(building => res.status(200).json(building))
