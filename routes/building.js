@@ -11,7 +11,7 @@ router.delete('/:id', auth, buildingCtrl.deleteBuilding);
 router.put('/:id', auth, buildingCtrl.updateBuilding);
 router.put('/addUser/:id', auth, buildingCtrl.addUserToBuilding);
 
-router.get('/filter/adress', buildingCtrl.getBuildingByAddress);
+router.post('/filter/adress', buildingCtrl.getBuildingByAddress);
 router.get('/posts/:id', buildingCtrl.getAllBuildingWithPosts);
 router.get('/residents/:id', buildingCtrl.getAllBuildingWithUsers);
 
