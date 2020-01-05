@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
+const uniqueValidator = require('mongoose-unique-validator');
+
 const buildingSchema = mongoose.Schema({
-    address: {type: String, required: true},
+    address: {type: String, required: true, unique: true},
     location: {
         type: {
             type: String, // Don't do `{ location: { type: String } }`
@@ -18,5 +20,7 @@ const buildingSchema = mongoose.Schema({
     posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
     residents: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
+
+buildingSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Building', buildingSchema);
