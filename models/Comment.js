@@ -7,4 +7,6 @@ const commentSchema = mongoose.Schema({
     postId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
+commentSchema.index({ content: 'text' });
+
 module.exports = mongoose.model('Comment', commentSchema);
