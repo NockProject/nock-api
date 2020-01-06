@@ -3,7 +3,7 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 
 module.exports =  (req, res, next) => {
-    console.log("here i am");
+    console.log(req);
 
     Comment.findById({_id:req.params.id})
         .then((result) => {
