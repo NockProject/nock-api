@@ -6,7 +6,7 @@ const User = require('../models/User');
 const banList = 'fdp connard con salope pute';
 const CronJob = require('cron').CronJob;
 
-const job = new CronJob('* * * * * * *', function( next ) {
+const job = new CronJob('* * 1 * * * *', function( next ) {
     Post.find({$text: {$search: banList}})
         .then((result) => {
             User.updateMany({_id: result.author},{$pull: {posts: result._id}})
