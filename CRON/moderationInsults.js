@@ -6,42 +6,35 @@ const User = require('../models/User');
 const banList = 'fdp connard con salope pute';
 const CronJob = require('cron').CronJob;
 
-const job = new CronJob('* * 1 * * * *', function( next ) {
+const safeDelComm = require('../middleware/functions/deleteOneComment');
+const safeDelPost = require('../middleware/functions/deleteOnePost');
+
+
+
+const job = new CronJob('* * * 1 * * *', function( next ) {
+    console.log(" \n ----- MODERATION EN COURS ----- \n");
+
     Post.find({$text: {$search: banList}})
         .then((result) => {
-            User.updateMany({_id: result.author},{$pull: {posts: result._id}})
-                .then(() => next)
-                .catch(error => console.log(error));
-
-            Comment.deleteMany({postId : result._id})
-                .then(() => next)
-                .catch(error => console.log(error));
-
-            Building.updateMany({_id: result.buildingId},{$pull: {posts: result._id}})
-                .then(() => next)
-                .catch(error => console.log(error));
-
-            Post.deleteMany({$text: {$search: banList}})
-                .then((result) => console.log( result.deletedCount +' Posts supprimer ! cause haine'))
-                .catch(error => console.log(error));
+            result.forEach(item => {
+                safeDelPost(item.id, next);
+                console.log("POST ID : " + item.id + " supprimer ! (Cause insulte)");
+            });
+            console.log('\n' + result.length + " Post(s) supprimer avec succes \n");
         })
         .catch(error => console.log(error));
 
     Comment.find({$text: {$search: banList}})
         .then((result) => {
-            Post.updateMany({_id: result.postId},{$pull: {comments: result._id}})
-                .then(() => next)
-                .catch(error => console.log(error));
-
-            User.updateMany({_id: result.author},{$pull: {comments: result._id}})
-                .then(() => next)
-                .catch(error => console.log(error));
-
-            Comment.deleteMany({$text: {$search: banList}})
-                .then((result) => console.log( result.deletedCount +' Commentaires supprimer ! cause haine'))
-                .catch(error => console.log(error));
+            result.forEach(item => {
+                safeDelComm(item.id, next);
+                console.log("COMMENTAIRE ID : " + item.id + " supprimer ! (Cause insulte)");
+            });
+            console.log('\n' + result.length + " Commentaire(s) supprimer avec succes \n");
         })
         .catch(error => console.log(error));
+
+    console.log(" \n ----- MODERATION TERMINER ----- \n")
 
 
 });
