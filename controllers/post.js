@@ -2,6 +2,14 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const Building = require('../models/Building');
 
+const safeDelOnePost = require('../middleware/functions/deleteOnePost');
+
+exports.safeDeletePost =  (req, res, next) => {
+    safeDelOnePost(req.params.id , next);
+    res.status(200).json({ message: 'Objet supprime !'});
+};
+
+
 exports.createPost = (req, res, next) => {
     const post = new Post({
         ...req.body
@@ -21,12 +29,6 @@ exports.createPost = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 
     res.status(201).json({ message: 'Objet enregistré !'})
-};
-
-exports.deletePost =  (req, res) => {
-    Post.deleteOne({_id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprime !'}))
-        .catch(error => res.status(400).json({ error }));
 };
 
 exports.updatePost = (req,res) => {

@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 router.get('/', buildingCtrl.getAllBuilding);
 router.post('/', buildingCtrl.createBuilding);
 router.get('/:id', buildingCtrl.getOneBuilding);
-router.delete('/:id', auth, buildingCtrl.deleteBuilding);
+router.delete('/:id', auth, buildingCtrl.safeDeleteBuilding);
 router.put('/:id', auth, buildingCtrl.updateBuilding);
 router.put('/addUser/:id', auth, buildingCtrl.addUserToBuilding);
 

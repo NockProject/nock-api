@@ -1,5 +1,7 @@
 const Building = require('../models/Building');
 
+const safeDelOneBuilding = require('../middleware/functions/deleteOneBuilding');
+
 exports.createBuilding = (req, res) => {
     const building = new Building({
         ...req.body
@@ -9,10 +11,9 @@ exports.createBuilding = (req, res) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.deleteBuilding =  (req, res) => {
-    Building.deleteOne({_id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprime !'}))
-        .catch(error => res.status(400).json({ error }));
+exports.safeDeleteBuilding =  (req, res, next) => {
+    safeDelOneBuilding(req.params.id , next);
+    res.status(200).json({ message: 'Objet supprime !'});
 };
 
 exports.updateBuilding = (req,res) => {
