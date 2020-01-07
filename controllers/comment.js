@@ -2,6 +2,9 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Post = require('../models/Post');
 
+const safeDelOneComm = require('../middleware/functions/deleteOneComment');
+
+
 exports.createComment = (req, res, next) => {
     const comment = new Comment({
         ...req.body
@@ -22,6 +25,11 @@ exports.createComment = (req, res, next) => {
 
     res.status(201).json({ message: 'Objet enregistré !'})
 
+};
+
+exports.safeDeleteComment = (req,res,next) => {
+    safeDelOneComm(req.params.id , next);
+    res.status(200).json({ message: 'Objet supprime !'});
 };
 
 exports.updateComment = (req,res) => {

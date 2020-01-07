@@ -4,6 +4,8 @@ const jwt =require('jsonwebtoken');
 const User = require('../models/User');
 const Building = require('../models/Building');
 
+const safeDelOneUser = require('../middleware/functions/deleteOneUser');
+
 exports.signUp = (req, res, next) =>{
     bcrypt.hash(req.body.password, 10)
         .then( hash => {
@@ -52,10 +54,9 @@ exports.login = (req, res) =>{
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.deleteUser = (req, res) => {
-    User.deleteOne({_id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprime !'}))
-        .catch(error => res.status(400).json({ error }));
+exports.safeDeleteUser =  (req, res, next) => {
+    safeDelOneUser(req.params.id , next);
+    res.status(200).json({ message: 'Objet supprime !'});
 };
 
 exports.getOneUser = (req, res)=>{

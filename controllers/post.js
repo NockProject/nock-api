@@ -2,6 +2,14 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const Building = require('../models/Building');
 
+const safeDelOnePost = require('../middleware/functions/deleteOnePost');
+
+exports.safeDeletePost =  (req, res, next) => {
+    safeDelOnePost(req.params.id , next);
+    res.status(200).json({ message: 'Objet supprime !'});
+};
+
+
 exports.createPost = (req, res, next) => {
     const post = new Post({
         ...req.body

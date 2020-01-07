@@ -11,7 +11,7 @@ const safeDelPost = require('../middleware/functions/deleteOnePost');
 
 
 
-const job = new CronJob('* * * 1 * * *', function( next ) {
+const job = new CronJob('00 00 00 * * *', function( next ) {
     console.log(" \n ----- MODERATION EN COURS ----- \n");
 
     Post.find({$text: {$search: banList}})
