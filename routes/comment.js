@@ -9,7 +9,7 @@ const safeDelComm = require('../middleware/safeDelComment');
 router.get('/', auth, commentCtrl.getAllComments);
 router.post('/', auth, commentCtrl.createComment);
 router.get('/:id', auth,commentCtrl.getOneComment);
-router.delete('/:id', auth, safeDelComm, commentCtrl.deleteComment);
+router.delete('/:id', auth, safeDelComm);
 router.put('/:id', auth, commentCtrl.updateComment);
 
 module.exports = router;

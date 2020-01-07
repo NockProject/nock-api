@@ -23,12 +23,6 @@ exports.createPost = (req, res, next) => {
     res.status(201).json({ message: 'Objet enregistré !'})
 };
 
-exports.deletePost =  (req, res) => {
-    Post.deleteOne({_id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprime !'}))
-        .catch(error => res.status(400).json({ error }));
-};
-
 exports.updatePost = (req,res) => {
     Post.updateOne({_id: req.params.id },
         { ...req.body, _id: req.params.id})
