@@ -6,18 +6,22 @@ exports.createComment = (req, res, next) => {
     const comment = new Comment({
         ...req.body
     });
-        comment.save()
-        .then(() =>
-                User.updateOne({ _id: comment.author._id },
-                    { $push: { comments: comment }})
-                    .then(() => next())
-                    .catch(error => res.status(400).json({ error })),
-                Post.updateOne({ _id: comment.postId._id },
-                    { $push: { comments: comment }})
-                    .then(() => next())
-                    .catch(error => res.status(400).json({ error })),
-            res.status(201).json({ message: 'Objet enregistré !'}))
+    comment.save()
+        .then(() => next())
         .catch(error => res.status(400).json({ error }));
+
+    User.updateOne({ _id: comment.author._id },
+        { $push: { comments: comment }})
+        .then(() => next())
+        .catch(error => res.status(400).json({ error }));
+
+    Post.updateOne({ _id: comment.postId._id },
+        { $push: { comments: comment }})
+        .then(() => next())
+        .catch(error => res.status(400).json({ error }));
+
+    res.status(201).json({ message: 'Objet enregistré !'})
+
 };
 
 exports.deleteComment =  (req, res, next) => {

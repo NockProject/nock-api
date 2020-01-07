@@ -12,18 +12,21 @@ exports.signUp = (req, res, next) =>{
                 email: req.body.email,
                 password: hash
             });
+            user.save()
+                .then(() => next())
+                .catch(error => res.status(400).json({ error }));
+
             Building.updateOne({ _id: user.buildingId._id },
                 { $push: { residents: user }})
-                .then(() =>
-                    user.save()
-                        .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
-                        .catch(error => res.status(400).json({ error })))
+                .then(() =>next())
                 .catch(error => res.status(400).json({ error }));
+
+            res.status(201).json({ message: 'Utilisateur cree !'});
         })
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.login = (req, res, next) =>{
+exports.login = (req, res) =>{
     User.findOne({ email: req.body.email })
         .then(user=>{
             if(!user){
@@ -49,25 +52,25 @@ exports.login = (req, res, next) =>{
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.deleteUser = (req, res, next) => {
+exports.deleteUser = (req, res) => {
     User.deleteOne({_id: req.params.id })
         .then(() => res.status(200).json({ message: 'Objet supprime !'}))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getOneUser = (req, res, next)=>{
+exports.getOneUser = (req, res)=>{
     User.findOne({_id: req.params.id})
         .then(user => res.status(200).json(user))
         .catch(error => res.status(404).json({error}));
 };
 
-exports.getAllUsers =  (req, res, next) => {
+exports.getAllUsers =  (req, res) => {
     User.find()
         .then(users => res.status(200).json(users))
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.updateUser = (req,res,next) => {
+exports.updateUser = (req,res) => {
     bcrypt.hash(req.body.password, 10)
         .then( hash => {
             User.updateOne({_id: req.params.id },
@@ -78,14 +81,14 @@ exports.updateUser = (req,res,next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.getUserWithPosts = (req,res,next) => {
+exports.getUserWithPosts = (req,res) => {
     User.findOne({_id: req.params.id})
         .populate('posts').exec()
         .then((posts) => res.status(200).json({written: posts}))
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.getUserWithComments = (req,res,next) => {
+exports.getUserWithComments = (req,res) => {
     User.findOne({_id: req.params.id})
         .populate('comments').exec()
         .then((comments) => res.status(200).json({written: comments}))

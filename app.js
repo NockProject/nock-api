@@ -29,6 +29,6 @@ app.use('/api/post', postRoutes);
 app.use('/api/comm', commentRoutes);
 app.use('/api/building', buildingRoutes);
 
-
+require('./CRON/moderationInsults');
 
 module.exports = app;
