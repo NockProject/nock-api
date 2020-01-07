@@ -10,7 +10,8 @@ module.exports = (req, res, next) => {
             res.status(401).json({error: 'User ID non valable !'});
         }else{
             if(req.body.isAdmin && req.body.isAdmin !== true || isAdmin !== true){
-                res.status(401).json({error: 'Vous n\'avez pas les droits d\'administration'});
+                res.status(401).json({error: 'Vous ne pouvez pas exécuter cette requête ! \n Vous n\'avez pas les droits d\'administration ! \n '});
+
             }else{
                 next();
             }

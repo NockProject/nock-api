@@ -18,9 +18,9 @@ const job = new CronJob('00 00 00 * * *', function( next ) {
         .then((result) => {
             result.forEach(item => {
                 safeDelPost(item.id, next);
-                console.log("POST ID : " + item.id + " supprimer ! (Cause insulte)");
+                console.log("POST ID : " + item.id + " supprimés ! (Cause insulte)");
             });
-            console.log('\n' + result.length + " Post(s) supprimer avec succes \n");
+            console.log('\n' + result.length + " Post(s) supprimé(s) avec succes \n");
         })
         .catch(error => console.log(error));
 
@@ -28,7 +28,7 @@ const job = new CronJob('00 00 00 * * *', function( next ) {
         .then((result) => {
             result.forEach(item => {
                 safeDelComm(item.id, next);
-                console.log("COMMENTAIRE ID : " + item.id + " supprimer ! (Cause insulte)");
+                console.log("COMMENTAIRE ID : " + item.id + " supprimés ! (Cause insulte)");
             });
             console.log('\n' + result.length + " Commentaire(s) supprimer avec succes \n");
         })
