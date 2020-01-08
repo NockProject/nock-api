@@ -57,10 +57,20 @@ exports.getAllBuildingWithPosts = (req,res) => {
     Building.findOne({_id: req.params.id})
         .populate({
             path: 'posts',
-            populate: {
-                path: 'comments',
-                options: { limit: 1 }
-            }
+            populate:  [
+                {
+                    path: 'comments',
+                    options: {limit: 1},
+                    populate: {
+                        path: 'author',
+                        select: ['lastName', 'firstName']
+                    }
+                },
+                {
+                    path: 'author',
+                    select: ['lastName', 'firstName']
+                }
+            ],
         })
         .exec()
         .then((posts) => res.status(200).json({feed: posts}))
