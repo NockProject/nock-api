@@ -15,20 +15,18 @@ exports.createPost = (req, res, next) => {
         ...req.body
     });
     post.save()
-        .then(() => next())
+        .then(() => next)
         .catch(error => res.status(400).json({ error }));
 
     Building.updateOne({ _id: post.buildingId._id },
         { $push: { posts: post }})
-        .then(() => next())
+        .then(() => next)
         .catch(error => res.status(400).json({ error }));
 
     User.updateOne({ _id: post.author._id },
         { $push: { posts: post }})
-        .then(() => next())
+        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
-
-    res.status(201).json({ message: 'Objet enregistré !'})
 };
 
 exports.updatePost = (req,res) => {

@@ -1,0 +1,11 @@
+{
+  "body": {
+        "_id" : "5e15c4bb1e4f1e6d6e7b7a9d",
+        "email" : "john_doe@mail.com",
+        "lastName": "john",
+        "firstName":"doe",
+        "password" : "password",
+        "isAdmin" : true,
+        "buildingId" : "5e15c211e4fb536a76a27b1e"
+      }
+}

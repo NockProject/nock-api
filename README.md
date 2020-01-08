@@ -23,12 +23,16 @@ http://nock-nock.herokuapp.com/
 - NodeJS
 - MongoDB database
 
-### Add Data into BDD
+### Minimal data set
 
 You have to lunch 
 ```Quickstart.js```
 
-With the command : ``` node Quickstart.js ```
+For this uncomment the line ```36``` into ```app.js```
+
+Run the command ```nodemon server``` one time.
+
+Then you can delete the line ```36``` into ```app.js```
 
 ## Authors
 

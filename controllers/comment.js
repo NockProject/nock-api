@@ -10,20 +10,18 @@ exports.createComment = (req, res, next) => {
         ...req.body
     });
     comment.save()
-        .then(() => next())
+        .then(() => next)
         .catch(error => res.status(400).json({ error }));
 
     User.updateOne({ _id: comment.author._id },
         { $push: { comments: comment }})
-        .then(() => next())
+        .then(() => next)
         .catch(error => res.status(400).json({ error }));
 
     Post.updateOne({ _id: comment.postId._id },
         { $push: { comments: comment }})
-        .then(() => next())
+        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
-
-    res.status(201).json({ message: 'Objet enregistré !'})
 
 };
 
