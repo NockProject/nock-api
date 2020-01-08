@@ -1,0 +1,14 @@
+{
+  "body": {
+    "_id": "5e15c211e4fb536a76a27b1e",
+    "address":"3 rue Victor Hugo",
+    "location":
+    {
+      "type" : "Point",
+      "coordinates" : [
+        -122.5,
+        37.7
+      ]
+    }
+  }
+}
