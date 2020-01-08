@@ -7,23 +7,26 @@ const Building = require('../models/Building');
 const safeDelOneUser = require('../middleware/functions/deleteOneUser');
 
 exports.signUp = (req, res, next) =>{
-    bcrypt.hash(req.body.password, 10)
+    const userObject = req.body;
+
+    bcrypt.hash(userObject.password, 10)
         .then( hash => {
             const user = new User({
-                ...req.body,
-                email: req.body.email,
+                ...userObject,
+                // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                email: userObject.email,
                 password: hash
             });
-            user.save()
-                .then(() => next())
-                .catch(error => res.status(400).json({ error }));
 
             Building.updateOne({ _id: user.buildingId._id },
                 { $push: { residents: user }})
-                .then(() =>next())
+                .then(() => next)
                 .catch(error => res.status(400).json({ error }));
 
-            res.status(201).json({ message: 'Utilisateur cree !'});
+            user.save()
+                .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
+                .catch(error => res.status(400).json({ error }));
+
         })
         .catch(error => res.status(500).json({ error }));
 };
@@ -42,8 +45,9 @@ exports.login = (req, res) =>{
                     res.status(200).json({
                         userId: user._id,
                         isAdmin: user.isAdmin,
+                        buildingId: user.buildingId,
                         token: jwt.sign(
-                            { userId: user._id, isAdmin: user.isAdmin },
+                            { userId: user._id, isAdmin: user.isAdmin},
                             process.env.TOKEN_ENCODE,
                             { expiresIn: '24h' }
                         )

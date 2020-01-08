@@ -1,4 +1,6 @@
 const Building = require('../models/Building');
+const User = require('../models/User');
+
 
 const safeDelOneBuilding = require('../middleware/functions/deleteOneBuilding');
 
@@ -23,9 +25,18 @@ exports.updateBuilding = (req,res) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.addUserToBuilding = (req,res) => {
+exports.addUserToBuilding = (req,res, next) => {
+
+    Building.updateMany({_id: req.params.id },{$pull: {residents: req.body.userId}})
+        .then(() => next)
+        .catch(error => console.log(error));
+
     Building.updateOne({_id: req.params.id },
         { _id: req.params.id, $push: { residents: req.body.userId }},)
+        .then(() => next)
+        .catch(error => res.status(400).json({ error }));
+
+    User.updateOne({_id: req.body.userId}, { buildingId : req.params.id})
         .then(() => res.status(200).json({message: 'Objet modifie !'}))
         .catch(error => res.status(400).json({ error }));
 };
@@ -42,14 +53,24 @@ exports.getAllBuilding =  (req, res) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getAllBuildingWithPosts = (req,res) => {
+exports.getAllBuildingInfos = (req,res) => {
     Building.findOne({_id: req.params.id})
         .populate({
             path: 'posts',
-            populate: {
-                path: 'comments',
-                options: { limit: 1 }
-            }
+            populate:  [
+                {
+                    path: 'comments',
+                    options: {limit: 1},
+                    populate: {
+                        path: 'author',
+                        select: ['lastName', 'firstName']
+                    }
+                },
+                {
+                    path: 'author',
+                    select: ['lastName', 'firstName']
+                }
+            ],
         })
         .exec()
         .then((posts) => res.status(200).json({feed: posts}))
