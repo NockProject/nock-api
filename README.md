@@ -40,4 +40,4 @@ Then you can delete the line ```36``` into ```app.js```
 * **Alban Pierson** - [Zalbani](https://github.com/Zalbani)
 * **Maxime V.** - [Valetmax](https://github.com/valetmax)
 * **Titouan G.** - [ImMyst](https://github.com/ImMyst)
-* **Jeremy Fevre** - [D33pLearning](https://github.com/D33pLearning)
+* **Fabien Treve** - [Fabien](https://github.com/FabienTreve)
