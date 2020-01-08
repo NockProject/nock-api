@@ -33,6 +33,6 @@ app.use('/api/comm', commentRoutes);
 app.use('/api/building', buildingRoutes);
 
 require('./CRON/moderationInsults');
-require('./quickStart');
+// require('./quickStart');
 
 module.exports = app;
