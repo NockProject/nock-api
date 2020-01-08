@@ -53,7 +53,7 @@ exports.getAllBuilding =  (req, res) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getAllBuildingWithPosts = (req,res) => {
+exports.getAllBuildingInfos = (req,res) => {
     Building.findOne({_id: req.params.id})
         .populate({
             path: 'posts',
