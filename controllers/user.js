@@ -7,11 +7,14 @@ const Building = require('../models/Building');
 const safeDelOneUser = require('../middleware/functions/deleteOneUser');
 
 exports.signUp = (req, res, next) =>{
-    bcrypt.hash(req.body.password, 10)
+    const userObject = req.body.user;
+
+    bcrypt.hash(userObject.password, 10)
         .then( hash => {
             const user = new User({
-                ...req.body,
-                email: req.body.email,
+                ...userObject,
+                // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                email: userObject.email,
                 password: hash
             });
 
