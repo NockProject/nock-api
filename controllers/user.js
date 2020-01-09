@@ -23,7 +23,7 @@ exports.signUp = (req, res, next) =>{
                 .then(() => next)
                 .catch(error => res.status(400).json({ error }));
 
-            user.save()
+            User.save()
                 .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
                 .catch(error => res.status(400).json({ error }));
 
