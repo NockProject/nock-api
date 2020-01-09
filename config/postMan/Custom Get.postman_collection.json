@@ -28,6 +28,30 @@
 			"response": []
 		},
 		{
+			"name": "Get Building all infos filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}api/building/infos/{{buildingID}}/filter/alert",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"building",
+						"infos",
+						"{{buildingID}}",
+						"filter",
+						"alert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Building by adress",
 			"request": {
 				"auth": {
