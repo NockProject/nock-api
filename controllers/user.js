@@ -7,28 +7,23 @@ const Building = require('../models/Building');
 const safeDelOneUser = require('../middleware/functions/deleteOneUser');
 
 exports.signUp = (req, res, next) =>{
-    const userObject = req.body;
-
-    bcrypt.hash(userObject.password, 10)
+    bcrypt.hash(req.body.password, 10)
         .then( hash => {
             const user = new User({
-                ...userObject,
-                // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-                email: userObject.email,
+                ...req.body,
+                email: req.body.email,
                 password: hash
             });
-
-            Building.updateOne({ _id: user.buildingId._id },
-                { $push: { residents: user }})
+            User.save()
                 .then(() => next)
                 .catch(error => res.status(400).json({ error }));
 
-            User.save()
+            Building.updateOne({ _id: user.buildingId._id },
+                { $push: { residents: user }})
                 .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
                 .catch(error => res.status(400).json({ error }));
-
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch( error => res.send(500).json({error}))
 };
 
 exports.login = (req, res) =>{
