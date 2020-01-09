@@ -21,11 +21,12 @@ exports.signUp = (req, res, next) =>{
             if(user.buildingId !== undefined){
                 Building.updateOne({ _id: user.buildingId._id },
                     { $push: { residents: user }})
-                    .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
+                    .then(() => next)
                     .catch(error => res.status(400).json({ error }));
             }
         })
-        .catch( error => res.send(500).json({error}))
+        .catch( error => res.send(500).json({error}));
+    res.status(201).json({ message: 'Utilisateur cree !'})
 };
 
 exports.login = (req, res) =>{
