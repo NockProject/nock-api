@@ -1,7 +1,7 @@
-const userCtrl = require('./controllers/user');
-const buildingCtrl = require('./controllers/building');
-const postCtrl = require('./controllers/post');
-const commCtrl = require('./controllers/comment');
+const userCtrl = require('../controllers/user');
+const buildingCtrl = require('../controllers/building');
+const postCtrl = require('../controllers/post');
+const commCtrl = require('../controllers/comment');
 
 const JsonBuilding = require('./quickJson/minBuilding.json');
 const JsonUser = require('./quickJson/minUser.json');
