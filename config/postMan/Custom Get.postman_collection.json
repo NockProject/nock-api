@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "aa653d0b-da18-49ae-8c75-48e96091b812",
+		"name": "Custom Get",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Building all infos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}api/building/infos/{{buildingID}}",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"building",
+						"infos",
+						"{{buildingID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Building all infos filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}api/building/infos/{{buildingID}}/filter/alert",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"building",
+						"infos",
+						"{{buildingID}}",
+						"filter",
+						"alert"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Building by adress",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"address\" : \"3 rue Verlaine\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}api/building/filter/address",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"building",
+						"filter",
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Post by type",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}api/post/filter/type/post",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"post",
+						"filter",
+						"type",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Building item with users",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}api/building/residents/{{buildingID}}",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"building",
+						"residents",
+						"{{buildingID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User with post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}api/auth/posts/{{userID}}",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"auth",
+						"posts",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User with comments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}api/auth/comments/{{userID}}",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"auth",
+						"comments",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post with comments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}api/post/comments/{{postID}}",
+					"host": [
+						"{{URL}}api"
+					],
+					"path": [
+						"post",
+						"comments",
+						"{{postID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
