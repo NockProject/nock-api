@@ -18,10 +18,12 @@ exports.signUp = (req, res, next) =>{
                 .then(() => next)
                 .catch(() => next);
 
-            Building.updateOne({ _id: user.buildingId._id },
-                { $push: { residents: user }})
-                .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
-                .catch(error => res.status(400).json({ error }));
+            if(user.buildingId !== undefined){
+                Building.updateOne({ _id: user.buildingId._id },
+                    { $push: { residents: user }})
+                    .then(() => res.status(201).json({ message: 'Utilisateur cree !'}))
+                    .catch(error => res.status(400).json({ error }));
+            }
         })
         .catch( error => res.send(500).json({error}))
 };
