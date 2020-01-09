@@ -16,7 +16,7 @@ exports.signUp = (req, res, next) =>{
             });
             User.save()
                 .then(() => next)
-                .catch(error => res.status(400).json({ error }));
+                .catch(() => next);
 
             Building.updateOne({ _id: user.buildingId._id },
                 { $push: { residents: user }})
