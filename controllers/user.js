@@ -14,7 +14,7 @@ exports.signUp = (req, res, next) =>{
                 email: req.body.email,
                 password: hash
             });
-            User.save()
+            user.save()
                 .then(() => next)
                 .catch(() => next);
 
