@@ -77,6 +77,57 @@ exports.getAllBuildingInfos = (req,res) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+exports.getAllBuildingInfosFilterByPostsType = (req,res) => {
+    if(req.params.type === 'alert'){
+        Building.findOne({_id: req.params.id})
+            .populate({
+                path: 'posts',
+                match: { alert: true},
+                populate:  [
+                    {
+                        path: 'comments',
+                        options: {limit: 1},
+                        populate: {
+                            path: 'author',
+                            select: ['lastName', 'firstName']
+                        }
+                    },
+                    {
+                        path: 'author',
+                        select: ['lastName', 'firstName']
+                    }
+                ],
+            })
+            .exec()
+            .then((posts) => res.status(200).json({feed: posts}))
+            .catch(error => res.status(500).json({ error }));
+    }else{
+        Building.findOne({_id: req.params.id})
+            .populate({
+                path: 'posts',
+                match: { type: req.params.type},
+                populate:  [
+                    {
+                        path: 'comments',
+                        options: {limit: 1},
+                        populate: {
+                            path: 'author',
+                            select: ['lastName', 'firstName']
+                        }
+                    },
+                    {
+                        path: 'author',
+                        select: ['lastName', 'firstName']
+                    }
+                ],
+            })
+            .exec()
+            .then((posts) => res.status(200).json({feed: posts}))
+            .catch(error => res.status(500).json({ error }));
+    }
+};
+
+
 exports.getAllBuildingWithUsers = (req,res) => {
     Building.findOne({_id: req.params.id})
         .populate('residents').exec()
