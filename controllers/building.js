@@ -27,10 +27,6 @@ exports.updateBuilding = (req,res) => {
 
 exports.addUserToBuilding = (req,res, next) => {
 
-    Building.updateMany({_id: req.params.id },{$pull: {residents: req.body.userId}})
-        .then(() => next)
-        .catch(error => console.log(error));
-
     Building.updateOne({_id: req.params.id },
         { _id: req.params.id, $push: { residents: req.body.userId }},)
         .then(() => next)
